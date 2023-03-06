@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
             return CursorLoader(
                 applicationContext,
-                Uri.parse("content://com.example.appmonedaserver/monedas"),
-                arrayOf<String>("_ID", "codeMoneda","nombreMoneda"),
+                Uri.parse("content://com.example.appmonedaserver/cambios"),
+                arrayOf<String>("_ID", "codeMonedaCambio","cambio","fechaActualizacion","fechaConsulta"),
                 null, null, null)
         }
 
@@ -27,19 +27,17 @@ class MainActivity : AppCompatActivity() {
 
         override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
             val adapter = SimpleCursorAdapter(applicationContext,
-                android.R.layout.simple_list_item_2,data,
-                arrayOf<String>("_ID", "codeMoneda","nombreMoneda"),
-                IntArray(2).apply { set(0, android.R.id.text1)
-                    set(1, android.R.id.text2)
+                R.layout.layoutcustom,data,
+                arrayOf<String>("_ID","cambio","codeMonedaCambio","fechaActualizacion","fechaConsulta"),
+                IntArray(5).apply {
+                    set(1, R.id.text1)
+                    set(2, R.id.text2)
+                    set(3, R.id.text3)
+                    set(4, R.id.text4)
                 },
                 SimpleCursorAdapter.IGNORE_ITEM_VIEW_TYPE
             )
             spnMonedas.adapter =adapter
-            data?.let {
-                while (it.moveToNext()){
-                    Log.i("CPMonenas", "ID: ${it.getInt(0)} , code=${it.getString(1)}")
-                }
-            }
         }
 
     }
